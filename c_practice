@@ -1,0 +1,79 @@
+#include <iostream>
+
+using namespace std;
+
+
+class FruitSeller
+{
+private:
+    int ApplePrice;
+    int NumOfApples;
+    int myMoney;
+public:
+    int SaleApples(int money)
+    {
+        int num = money/ApplePrice; //구매자가 낸 돈을 사과 가격으로 나누어서 산 갯수 구하기
+        NumOfApples -= num;  //총 사과수에서 판매한 사과 수 빼기
+        myMoney += money;
+        return num;
+    }
+    void Initmembers(int price, int num, int money)
+    {
+        ApplePrice=price;
+        NumOfApples=num;
+        myMoney=money;
+    }
+    void ShowSaleResult()
+    {
+        cout << "남은 사과 : "<<NumOfApples<<endl;
+        cout << "판매 수익 : "<<myMoney<<endl;
+    }
+};
+
+class FruitBuyer
+{
+private:
+    int myMoney; // 가지고 있는 돈
+    int numofApples;
+public:
+    void InitMembers(int money)
+    {
+        myMoney=money;
+        numofApples=0;
+    }
+    void BuyApples(FruitSeller &seller, int money)
+    {
+        numofApples+=seller.SaleApples(money);
+        myMoney-=money;
+    }
+
+    void ShowBuyResult()
+    {
+        cout <<"현재 잔액: " <<myMoney<<endl;
+        cout <<"구매한 사과 개수 : " <<numofApples<<endl;
+    }
+};
+
+
+
+int main()
+{
+    FruitSeller seller;
+    seller.Initmembers(1000,20,0);
+    FruitBuyer buyer;
+    buyer.InitMembers(5000);
+    buyer.BuyApples(seller,5000);
+
+    cout << "과일 판매자의 현황"<<endl;
+    seller.ShowSaleResult();
+
+    cout<<endl;
+
+    cout << "과일 구매자의 현황"<<endl;
+    buyer.ShowBuyResult();
+
+    return 0;
+
+    return 0;
+}
+
